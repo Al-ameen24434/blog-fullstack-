@@ -4,8 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "turbo run dev",
+    "build": "vite build",
+    "check-types": "tsc --noEmit"
   },
+  "packageManager": "npm@11.4.2",
+  "workspaces": [
+    "apps/*"
+  ],
   "keywords": [],
   "author": "",
   "license": "ISC",
