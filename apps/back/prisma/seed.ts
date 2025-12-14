@@ -80,7 +80,7 @@ async function main() {
     'Science',
     'Entertainment',
     'Gaming',
-  ];s
+  ];
 
   // Shuffle and pick uniques
   const shuffledTags = faker.helpers.shuffle(tagNames).slice(0, TAGS_COUNT);
