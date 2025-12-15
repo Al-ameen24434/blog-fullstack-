@@ -17,4 +17,17 @@ async function main() {
     });
   });
   await Promise.all(users);
+
+  const posts = Array.from({ length: 30 }).map(async () => {
+    const userCount = await prisma.user.count();
+    return prisma.post.create({
+      data: {
+        title: faker.lorem.sentence(),
+        content: faker.lorem.paragraphs(),
+        published: faker.datatype.boolean(),
+        authorId: Math.floor(Math.random() * userCount) + 1,
+      },
+    });
+  });
+  await Promise.all(posts);
 }
