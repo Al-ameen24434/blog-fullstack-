@@ -53,4 +53,17 @@ async function main() {
         },
       }),
   );
+
+  console.log('Seeding completed.');
 }
+
+main()
+  .then(() => {
+    prisma.$disconnect();
+    process.exit(0);
+  })
+  .catch((e) => {
+    prisma.$disconnect();
+    console.error(e);
+    process.exit(1);
+  });
