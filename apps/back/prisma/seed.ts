@@ -38,4 +38,19 @@ async function main() {
     });
   });
   await Promise.all(posts);
+
+  posts.map(
+    async (post) =>
+      await prisma.post.create({
+        data: {
+          ...post,
+          Comments: {
+            create: Array.from({ length: 5 }).map(() => ({
+              content: faker.lorem.sentences(2),
+              authorId: Math.floor(Math.random() * 10) + 1,
+            })),
+          },
+        },
+      }),
+  );
 }
