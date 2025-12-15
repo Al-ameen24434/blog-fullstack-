@@ -3,6 +3,12 @@ import { faker } from '@faker-js/faker';
 import { hash } from 'bcrypt';
 
 const prisma = new PrismaClient();
+function generateSlug(title: string) {
+  return title
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)+/g, '');
+}
 
 async function main() {
   const users = Array.from({ length: 10 }).map(async () => {
@@ -23,8 +29,10 @@ async function main() {
     return prisma.post.create({
       data: {
         title: faker.lorem.sentence(),
-        content: faker.lorem.paragraphs(),
-        published: faker.datatype.boolean(),
+        slug: generateSlug(faker.lorem.sentence()),
+        content: faker.lorem.paragraphs(3),
+        thumbnauil: faker.image.urlLoremFlickr(),
+        published: true,
         authorId: Math.floor(Math.random() * userCount) + 1,
       },
     });
