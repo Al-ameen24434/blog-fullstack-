@@ -1,8 +1,27 @@
-import { PrismaClient } from '@prisma/client/extension';
+import 'dotenv/config';
 import { faker } from '@faker-js/faker';
 import { hash } from 'bcrypt';
 
+import { PrismaClient } from '@prisma/client';
+console.log('PRISMA CLIENT PATH:', require.resolve('@prisma/client'));
+console.log('DATABASE_URL =', process.env.DATABASE_URL);
+console.log('--- DEBUG START ---');
+console.log('NODE VERSION:', process.version);
+console.log('CWD:', process.cwd());
+console.log('DATABASE_URL:', process.env.DATABASE_URL);
+
+try {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const prismaPkg = require('@prisma/client');
+  console.log('PRISMA CLIENT LOADED:', Object.keys(prismaPkg));
+} catch (e) {
+  console.error('FAILED TO LOAD @prisma/client', e);
+}
+
+console.log('--- DEBUG END ---\n');
+
 const prisma = new PrismaClient();
+
 function generateSlug(title: string) {
   return title
     .toLowerCase()
@@ -31,27 +50,25 @@ async function main() {
         title: faker.lorem.sentence(),
         slug: generateSlug(faker.lorem.sentence()),
         content: faker.lorem.paragraphs(3),
-        thumbnauil: faker.image.urlLoremFlickr(),
+        thumbnail: faker.image.urlLoremFlickr(),
         published: true,
         authorId: Math.floor(Math.random() * userCount) + 1,
       },
     });
   });
-  await Promise.all(posts);
+  const createdPosts = await Promise.all(posts);
 
-  posts.map(
-    async (post) =>
-      await prisma.post.create({
-        data: {
-          ...post,
-          Comments: {
-            create: Array.from({ length: 5 }).map(() => ({
-              content: faker.lorem.sentences(2),
-              authorId: Math.floor(Math.random() * 10) + 1,
-            })),
-          },
-        },
-      }),
+  await Promise.all(
+    createdPosts.map(
+      async (post) =>
+        await prisma.comment.createMany({
+          data: Array.from({ length: 5 }).map(() => ({
+            content: faker.lorem.sentences(2),
+            authorId: Math.floor(Math.random() * 10) + 1,
+            postId: post.id,
+          })),
+        }),
+    ),
   );
 
   console.log('Seeding completed.');
@@ -64,6 +81,6 @@ main()
   })
   .catch((e) => {
     prisma.$disconnect();
-    console.error(e);
+
     process.exit(1);
   });
