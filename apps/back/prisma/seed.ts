@@ -1,24 +1,24 @@
-import 'dotenv/config';
 import { faker } from '@faker-js/faker';
 import { hash } from 'bcrypt';
+import 'dotenv/config';
 
 import { PrismaClient } from '@prisma/client';
-console.log('PRISMA CLIENT PATH:', require.resolve('@prisma/client'));
-console.log('DATABASE_URL =', process.env.DATABASE_URL);
-console.log('--- DEBUG START ---');
-console.log('NODE VERSION:', process.version);
-console.log('CWD:', process.cwd());
-console.log('DATABASE_URL:', process.env.DATABASE_URL);
+// console.log('PRISMA CLIENT PATH:', require.resolve('@prisma/client'));
+// console.log('DATABASE_URL =', process.env.DATABASE_URL);
+// console.log('--- DEBUG START ---');
+// console.log('NODE VERSION:', process.version);
+// console.log('CWD:', process.cwd());
+// console.log('DATABASE_URL:', process.env.DATABASE_URL);
 
-try {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const prismaPkg = require('@prisma/client');
-  console.log('PRISMA CLIENT LOADED:', Object.keys(prismaPkg));
-} catch (e) {
-  console.error('FAILED TO LOAD @prisma/client', e);
-}
+// try {
+//   // eslint-disable-next-line @typescript-eslint/no-var-requires
+//   const prismaPkg = require('@prisma/client');
+//   console.log('PRISMA CLIENT LOADED:', Object.keys(prismaPkg));
+// } catch (e) {
+//   console.error('FAILED TO LOAD @prisma/client', e);
+// }
 
-console.log('--- DEBUG END ---\n');
+// console.log('--- DEBUG END ---\n');
 
 const prisma = new PrismaClient();
 
