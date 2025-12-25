@@ -1,27 +1,26 @@
 {
-  "name": "blog-turborepo",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "front",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "dev": "turbo run dev",
-    "build": "vite build",
-    "db:seed": "ts-node  ./apps/back/prisma/seed.ts",
-    "check-types": "tsc --noEmit"
-  },
-  "packageManager": "npm@11.4.2",
-  "workspaces": [
-    "apps/*"
-  ],
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "module",
-  "devDependencies": {
-    "@cspotcode/source-map-support": "^0.8.1",
-    "turbo": "^2.6.3"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
   },
   "dependencies": {
-    "ts-node": "^10.9.2"
+    "next": "16.0.7",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.0.7",
+    "tailwindcss": "^4",
+    "typescript": "^5"
   }
 }
